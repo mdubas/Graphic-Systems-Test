@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graphic</title>
+  </head>
+  <body>
+    <canvas width="600" height="400"></canvas>
+    <script>
+      //desenhando o retangulo
+      function drawRectangule(x, y, width, height, color) {
+        var screen = document.querySelector("canvas");
+        var pincel = screen.getContext("2d");
+
+        pincel.fillStyle = color;
+        pincel.fillRect(x, y, width, height);
+        pincel.strokeStyle = "black";
+        pincel.strokeRect(x, y, width, height);
+      }
+
+      //desenhando o texto
+      function drawText(x, y, text, font) {
+        var screen = document.querySelector("canvas");
+        var pincel = screen.getContext("2d");
+
+        pincel.font = font + "px Georgia";
+        pincel.fillStyle = "black";
+        pincel.fillText(text, x, y);
+      }
+
+      //chamando a função
+      function drawBar(x, y, statistics, companys, color, text, font) {
+        //função do texto
+        drawText(x, y - 10, text, font);
+
+        var sumHeight = 0;
+        var heightBreakLine = 0;
+
+        for (var i = 0; i < statistics.length; i++) {
+          //criando a barra do gráfico
+          var height = statistics[i];
+          drawRectangule(x, y + sumHeight, 50, height, color[i]);
+          sumHeight += height;
+
+          //Criando as legendas do gráfico
+          drawRectangule(x + 100, y + heightBreakLine, 10, 10, color[i]);
+          drawText(x + 115, y + 8 + heightBreakLine, companys[i], 10);
+          heightBreakLine += 20;
+        }
+      }
+
+      //montando a porcentagem dos graficos
+      var statistics2021 = [50, 25, 20, 5];
+      var statistics2022 = [65, 20, 13, 2];
+      var color = ["blue", "green", "yellow", "red"];
+      var names1 = ["Chrome", "Firefox", "Safari", "Others"];
+      var names2 = ["Chrome", "Firefox", "Safari", "Bing"];
+
+      //execução
+      drawBar(50, 50, statistics2021, names1, color, "2021", 24);
+      drawBar(50, 200, statistics2022, names2, color, "2022", 24);
+    </script>
+  </body>
+</html>
